@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Rock Paper Scissors</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sofia">
+    <style>
+        h1,
+        h2,
+        div,h5 {
+            font-family: "Sofia", sans-serif;
+            color: whitesmoke;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        #game {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        button {
+            font-size: 20px;
+            padding: 10px 20px;
+            margin: 0 10px;
+        }
+
+        #result {
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            margin-top: 20px;
+            color: rgb(234, 245, 90);
+        }
+
+        #compchoice {
+            width: 100%;
+            max-width: 300px;
+            height: auto;
+            margin-top: 20px;
+        }
+
+        #score {
+            font-size: 24px;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 600px) {
+            #game {
+                flex-direction: column;
+            }
+
+            button {
+                width:100%;
+                margin-bottom: 10px;
+            }
+        }
+    </style>
+    <script>
+        function playRound(playerSelection) {
+            const choices = ["rock", "paper", "scissors"];
+            const computerSelection = choices[Math.floor(Math.random() * choices.length)]
+            const result = determineWinner(playerSelection, computerSelection);
+            updateScore(result); 
+            retcomp(computerSelection);
+            document.getElementById("result").innerText = result;
+        }
+
+        function determineWinner(playerSelection, computerSelection) {
+            if (playerSelection === computerSelection) {
+                return "It's a tie!";
+            } else if (
+                (playerSelection === "rock" && computerSelection === "scissors") ||
+                (playerSelection === "paper" && computerSelection === "rock") ||
+                (playerSelection === "scissors" && computerSelection === "paper")
+            ) {
+                return "You win!";
+            } else {
+                return "Computer wins!";
+            }
+        }
+        function retcomp(computerSelection) {
+
+            if (computerSelection == 'rock') {
+                document.getElementById("compchoice").src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcROTUsxBndS2o1Mi9d32onUfS5sbwr2ZG-6xg&usqp=CAU";
+            }
+            else if (computerSelection == 'paper') {
+                document.getElementById("compchoice").src ="https://brendan-fisher.github.io/rock_paper_scissors/images/paper.png";
+            }
+            else {
+                document.getElementById('compchoice').src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSKyJob5hcksKHEhaDgqD7g1122-WhLmEQAKVJiozWqvSjHlNr8Qy0rD2HG8ocMWBWS9QU&usqp=CAU";
+            }
+        }
+        let playerScore = 0;
+        let computerScore = 0;
+
+        function updateScore(result) {
+            if(playerScore==10|| computerScore==10)
+        {
+            document.getElementById("rock").disabled = true;
+            document.getElementById("paper").disabled = true;
+            document.getElementById("scissors").disabled = true;
+            if(playerScore==10){
+               alert("You win!");
+               die();
+            }
+            else{
+                alert("Computer wins!");
+                die();
+            }
+        }
+            if (result === "You win!") {
+                playerScore++;
+            } else if (result === "Computer wins!") {
+                computerScore++;
+            }
+            document.getElementById("score").innerText = `Player: ${playerScore} - Computer: ${computerScore}`;
+        } 
+        function reset() {
+	    location.reload();
+        }
+    </script>
+</head>
+
+<body style="background-color:black; text-align: center; color:whitesmoke">
+    <h1 style="font-size:50px;">Rock Paper Scissors</h1>
+    <div id="game">
+        <button style="border-color: dodgerblue;" id="rock" onclick="playRound('rock')"><img id="rocks"
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcROTUsxBndS2o1Mi9d32onUfS5sbwr2ZG-6xg&usqp=CAU"
+                alt="Rock"></button>
+        <button id="paper" onclick="playRound('paper')"><img id="papers"
+                src="https://brendan-fisher.github.io/rock_paper_scissors/images/paper.png" alt="Paper"></button>
+        <button id="scissors" onclick="playRound('scissors')"><img id="scissor"
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSKyJob5hcksKHEhaDgqD7g1122-WhLmEQAKVJiozWqvSjHlNr8Qy0rD2HG8ocMWBWS9QU&usqp=CAU"
+                alt="Scissors"></button>
+    </div>
+    <div style="font-size:40px;" id="result"></div>
+    <h2 style="font-size:40px;">Computer's Choice:</h2>
+    <img style="background-color:white; text-align:center;" src="https://caesarstone.co.nz/wp-content/uploads/sites/5/2020/12/4600_Organic-White_4600_OrganicWhite_CU_275x454_sRGB_071222.jpg"
+        alt="Computer" id="compchoice">
+       <h5 style="font-size: 35px;">Score</h5><div style="color:whitesmoke;" id="score"></div><br>
+       <button id="reset" onclick="reset()">Reset</button>
+</body>
+
+</html>
